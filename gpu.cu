@@ -301,9 +301,9 @@ __global__ void gpu_forward_pass(NeuralNetwork *nn, NeuralNetworkData *data, Scr
 			}
 
 			current_output[activation_index] = activation;
-
-			__syncthreads();
 		}
+
+		__syncthreads();
 
 		current_biases += result_size;
 		current_inputs += inputs_size;
