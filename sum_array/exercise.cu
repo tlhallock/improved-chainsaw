@@ -108,7 +108,7 @@ __global__ void cumulative_sum(int n, float *array) {
 	// [. . . . . . . .][.
 	//                p  0
 
-	size_t threadId = threadIdx.x;
+	unsigned int threadId = threadIdx.x;
 	unsigned int sub_array_size = 1;
 	while (sub_array_size < n) {
 		if (sub_array_size != 1) {
@@ -117,12 +117,12 @@ __global__ void cumulative_sum(int n, float *array) {
 		}
 
 		// divide the array into sub arrays of size sub_array_size
-		// this is the index of the two we will add
+		// this is the index of the two arrays we will add
 		unsigned int array_pair = 2 * sub_array_size * (threadId / sub_array_size);
 		// this is the index of the sum calculated last iteration
 		unsigned int previous_sum = array_pair + sub_array_size - 1;
 		// this is where this thread will add the previous result to
-		unsigned int destination = array_pair + sub_array_size + threadId;
+		unsigned int destination = array_pair + sub_array_size + threadId % sub_array_size;
 		if (destination < n) {
 			array[destination] += array[previous_sum];
 		}
