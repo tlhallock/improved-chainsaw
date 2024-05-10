@@ -4,7 +4,7 @@
 __global__ void sumArray(float *in, float *out, int N);
 
 int main() {
-    int N = 1024; // Size of the array
+    int N = 256; // Size of the array
     size_t bytes = N * sizeof(float);
 
     float *h_in = (float*) malloc(bytes);
@@ -25,7 +25,7 @@ int main() {
 
     // Kernel launch
     int threadsPerBlock = 256;
-    int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+    int blocksPerGrid = 1; // (N + threadsPerBlock - 1) / threadsPerBlock;
     sumArray<<<blocksPerGrid, threadsPerBlock>>>(d_in, d_out, N);
 
     // Copy result back to host
